@@ -1,4 +1,5 @@
 # CMOS Schmitt Trigger Design and Characterization
+**Guided by: Siddharth Singh Parihar Sir**
 
 This repository contains the design, simulation, and characterization of a **CMOS Schmitt Trigger**. The design flow involves schematic capture and netlist generation in **Synopsys Custom Compiler**, followed by full electrical characterization in **LTspice**.
 
@@ -67,3 +68,24 @@ The following numerical data was extracted from the Spice Error Log after transi
 ```text
 vth_plus: v(vout_final)=0.525 AT 4.78357e-008
 avg_power: AVG(i(v_vdd)*v(vdd!))=-2.01495e-007
+```
+> **Note**: Due to the **30nm channel length**, Level 1 MOSFET warnings were present in the log as the dimensions are below the legacy model's recommended limits. These were acknowledged and did not impact the functional verification.
+
+<a name="how-to-run"></a>
+## How to Run
+1. **Clone the repository**: `git clone https://github.com/Harshitjoshi7/Schmitt-Trigger-Design.git`
+2. **Open the testbench**: Open `tb/schmitt_tb.sp` in **LTspice**.
+3. **Execute Simulation**: Click the **Run** (Running Man) icon.
+4. **View Results**:
+   * **Transient**: Plot `V(vin_sig)` and `V(vout_final)`.
+   * **Hysteresis**: Right-click the X-axis of the plot and change the quantity from `time` to `V(vin_sig)`.
+   * **Measurements**: Press **Ctrl + L** to see the power and threshold log.
+
+<a name="mentorship"></a>
+## Mentorship
+Special thanks to my guide for providing technical oversight and direction on this project:
+* **Siddharth Singh Parihar Sir**
+
+<a name="author"></a>
+## Author
+* **Harshit Joshi** - [GitHub Profile](https://github.com/Harshitjoshi7)
