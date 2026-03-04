@@ -1,4 +1,4 @@
-# Schmitt Trigger Design and Characterization
+# CMOS Schmitt Trigger Design and Characterization
 
 This repository contains the design, simulation, and characterization of a **CMOS Schmitt Trigger**. The design flow involves schematic capture and netlist generation in **Synopsys Custom Compiler**, followed by full electrical characterization in **LTspice**.
 
@@ -7,18 +7,18 @@ This repository contains the design, simulation, and characterization of a **CMO
 * [Circuit Design](#circuit-design)
 * [Simulation Environment](#simulation-environment)
 * [Characterization Results](#characterization-results)
-* [Hysteresis and Waveforms](#hysteresis-and-waveforms)
+* [Visual Verification](#visual-verification)
 * [Log and Error Analysis](#log-and-error-analysis)
-* [How to Run](#how-to-run)
+* [How to Reproduce](#how-to-run)
 * [Author](#author)
 
 ---
 
 ## Introduction
-A Schmitt Trigger is a dual-threshold comparator circuit that uses positive feedback to implement hysteresis. It is essential in VLSI systems for noise immunity and cleaning up "noisy" digital signals by preventing multiple transitions at the output for a single threshold crossing.
+A Schmitt Trigger is a dual-threshold comparator circuit that uses positive feedback to implement hysteresis. It is a fundamental building block in VLSI systems used for noise suppression, wave-shaping, and preventing multiple output transitions from slow or noisy input signals.
 
 ## Circuit Design
-The design utilizes a standard 6-transistor CMOS configuration. The switching thresholds ($V_{TH+}$ and $V_{TH-}$) are determined by the ratio of the PMOS and NMOS device widths.
+The design utilizes a standard 6-transistor CMOS configuration. The switching thresholds ($V_{TH+}$ and $V_{TH-}$) are determined by the ratio of the PMOS and NMOS device widths, specifically the feedback transistors.
 
 * **Process Node:** Generic 105nm (Level 1 Models)
 * **Supply Voltage ($V_{DD}$):** 1.05V
@@ -27,7 +27,7 @@ The design utilizes a standard 6-transistor CMOS configuration. The switching th
 
 
 ## Simulation Environment
-The project was verified using **LTspice**. The raw netlist exported from Synopsys Custom Compiler was modified to include generic Level 1 models to ensure tool interoperability and open-source accessibility.
+The project was verified using **LTspice**. The raw netlist exported from Synopsys Custom Compiler was adapted to use generic Level 1 models to ensure tool interoperability and open-source accessibility.
 
 ### Tools Used
 * **Design:** Synopsys Custom Compiler
@@ -35,7 +35,7 @@ The project was verified using **LTspice**. The raw netlist exported from Synops
 * **Platform:** AlmaLinux (RHEL-based)
 
 ## Characterization Results
-The circuit was characterized using a triangle wave input to observe both rising and falling transition points.
+The circuit was characterized using a triangle wave input to observe both rising and falling transition points across the full supply range.
 
 | Parameter | Value | Status |
 | :--- | :--- | :--- |
@@ -44,22 +44,25 @@ The circuit was characterized using a triangle wave input to observe both rising
 | **$V_{H}$ (Hysteresis Width)** | **~0.31 V** | Calculated |
 | **Average Power** | **~201.5 nW** | Verified |
 
+## Visual Verification
+
+### 1. Transient Waveform (Time Domain)
+The transient analysis shows the output (`vout_final`) "snapping" high or low only after the input (`vin_sig`) crosses the defined thresholds. This confirms the time-domain stability of the design.
+![Transient Waveform](./images/transient_waveform.png)
 
 
-## Hysteresis and Waveforms
+### 2. Hysteresis Loop (VTC)
+The Voltage Transfer Characteristic (VTC) curve plotted as $V_{out}$ vs $V_{in}$ illustrates the distinct hysteresis window and noise margin.
+![Hysteresis Curve](./images/hysteresis_curve.png)
 
-### 1. Circuit Symbol and Setup
-The logic symbol and the testbench setup used for characterization.
-| Symbol | Testbench |
+
+### 3. Circuit Symbol and Setup
+| Logic Symbol | Simulation Testbench |
 | :---: | :---: |
 | ![Symbol](./images/symbol.png) | ![Testbench](./images/testbench.png) |
 
-### 2. Hysteresis Loop (VTC)
-The Voltage Transfer Characteristic (VTC) curve plotted as $V_{out}$ vs $V_{in}$ showing the distinct hysteresis window.
-![Hysteresis Curve](./images/hysteresis_curve.png)
-
 ## Log and Error Analysis
-The following snippets represent the numerical verification from the Spice Error Log:
+The following numerical data was extracted from the Spice Error Log after transient analysis:
 
 ```text
 vth_plus: v(vout_final)=0.525 AT 4.78357e-008
