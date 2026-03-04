@@ -48,7 +48,7 @@ The circuit was characterized using a triangle wave input to observe both rising
 
 ### 1. Transient Waveform (Time Domain)
 The transient analysis shows the output (`vout_final`) "snapping" high or low only after the input (`vin_sig`) crosses the defined thresholds. This confirms the time-domain stability of the design.
-![Transient Waveform](./images/transient_waveform.png)
+![Transient Waveform](.images/transient_waveform.png)
 
 
 ### 2. Hysteresis Loop (VTC)
